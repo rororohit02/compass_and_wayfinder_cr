@@ -36,7 +36,7 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
   
-# giving a title to my graph
+#Set title
 plt.title('Compass')
 
 print("Running")

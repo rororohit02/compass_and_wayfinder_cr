@@ -1,14 +1,14 @@
 #TODO: Modify code to be a grid that represents 30 degrees horizontal and 30 degrees vertical. Does not utilize AR.
 #      and make the universal angles change as the user rotates
-#      i.e. user horizontally faces north @ 0deg, program captures -15deg to 15deg, horizontally and vertically
+#      i.e. user horizontally faces north @ 0deg, program captures -15deg to 15deg, horizontally and vertically then if they rotate right to NE @ 30deg, program captures 0deg to 30deg, horizontally and still -15deg to 15deg vertically
 
 #TODO: Incorporate into glass display
 
 
 import math
 import random
-
 import matplotlib.pyplot as plt
+
 plt.switch_backend('TkAgg')
 # setting x and y axis range
 plt.ylim(-30,30)
