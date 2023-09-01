@@ -11,5 +11,5 @@
 ## Compass.py
 
 - [ ] Implement latitude and longitude coordinate and translate to Cartesian using ESRI maps and MATLAB.
-- [ ] Find a way to remove the grid so that only the vector is graphed without any axis
+- [x] Find a way to remove the grid so that only the vector is graphed without any axis
 - [ ] Loop code to run indefinitely given coordinates

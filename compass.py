@@ -10,11 +10,11 @@ Function:   Takes any universal point and creates a unit vector with
 #       and translate to Cartesian using ESRI maps and MATLAB.
 #       https://www.mathworks.com/help/matlab/matlab_external/call-matlab-functions-asynchronously-from-python.html
 #       https://www.mathworks.com/help/map/ref/projcrs.html
-#       UTM ESRI Code for North Texas: 103539 (https://epsg.io/?q=kind:PROJCRS&page=67)
-#       UTM ESRI Code for North Central Texas: 103540 (worth using both, I can't decide)
+#       UTM ESRI Code for North Texas: 103539 (https://epsg.io/?q=kind:PROJCRS&page=67) North Central Texas: 103540 (worth using both) 103539-103543 Texas Range
+
 
 #TODO: Find a way to remove the grid so that only the vector is graphed
-#       without any axis
+#       without any axis DONE
 
 #TODO: Loop code to run indefinitely
 
@@ -22,9 +22,9 @@ Function:   Takes any universal point and creates a unit vector with
 
 
 import math
-import random # To be used with random coordinates in the future
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+#import random #To be used with random coordinates in the future
 
 
 def setup_graph():
@@ -42,8 +42,11 @@ def setup_graph():
     ax.set_ylabel('y')
     ax.set_zlabel('z')
     
+    plt.axis('off') #Turns off axes and grid
+
     plt.title('Compass')
     return fig, ax
+
 
 def get_user_input():
     # Get cartesian coordinates from origin. Represents vector between two
@@ -66,19 +69,14 @@ def generate_unit_vector(coordinate: tuple, azimuth: int) -> tuple:
 
 #Main Function
 if __name__ == "__main__":
-
     print("START")
 
     fig, ax = setup_graph()
     x, y, z, azimuth = get_user_input()
-
     origin = (0,0,0)
     unit_vector = generate_unit_vector((x,y,z), azimuth)
-
-    ax.quiver(*origin, *unit_vector) #Plot vector
-
+    ax.quiver(*origin, *unit_vector, ) #Plot vector 
     ax.view_init(30,azimuth-90)  #Orient graph along x-axis without adjustment for azimuth
-
     plt.show()
 
     print("FINISH")
