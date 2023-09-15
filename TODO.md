@@ -16,3 +16,4 @@
 - [x] Add queue and basic 'animation'
 - [ ] Improve animation running time/efficiency
 - [ ] Add support for asynchronous data input
+- [ ] Add support for changing view angle

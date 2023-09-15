@@ -102,12 +102,10 @@ def generate_unit_vector(coordinate: tuple) -> tuple:
     magnitude = math.sqrt((x*x)+(y*y)+(z*z))
     return ((x/magnitude), (y/magnitude), (z/magnitude))
 
+#Technical Test for animating views and spins with expanding data
+def scatter_and_spin(coordinate_data: list, viewing_data: list):
+    assert(len(coordinate_data) == len(viewing_data))
 
-#Main Function
-if __name__ == "__main__":
-    print("START")
-
-    #Queued Animated Dots
     plt.switch_backend('TkAgg') # Recommended for plotting vectors in a 3d space
 
     #Setup simple 3-D fig/x
@@ -121,31 +119,44 @@ if __name__ == "__main__":
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    azimuth = 45
-    ax.view_init(30,azimuth-90)
     plt.title('Compass')
-    
-    #Set up simple queue and enumerate test coordinate data
-    q = queue.SimpleQueue()
-    coords_data = [(0,0,0), (10,0,0), (10, 10, 0), (0, 10, 0), (0, 10, 10), (0, 0, 10), (10, 0, 10), (10, 10, 10)]
-    for coord_data in coords_data:
-        q.put(coord(coord_data))
+
+    #Set up simple queue and enumerate test coordinate data and test viewing data
+    q_coords = queue.SimpleQueue()
+    q_views = queue.SimpleQueue()
+    for coord_data in coordinate_data:
+        q_coords.put(coord(coord_data))
+    for view_data in viewing_data:
+        q_views.put(view_data)
     x_data = []
     y_data = []
     z_data = []
 
     #Loop through queue, update data as new coords dequeued, and redraw plot
-    for _ in range(q.qsize()):
-        new_coord = q.get()
+    for _ in range(q_coords.qsize()):
+        new_coord = q_coords.get()
+        new_view = q_views.get()
 
         #Update data
         x_data.append(new_coord.x) 
         y_data.append(new_coord.y)
         z_data.append(new_coord.z)
+        ax.view_init(30,new_view-90)
 
         #Draw data with pause after
         ax.scatter(x_data, y_data, z_data)
         plt.draw() 
         plt.pause(.5)
+
+
+#Main Function
+#Should be minimal coding within here
+if __name__ == "__main__":
+    print("START")
+
+    coords_data = [(0,0,0), (10,0,0), (10, 10, 0), (0, 10, 0), (0, 10, 10), (0, 0, 10), (10, 0, 10), (10, 10, 10)]
+    views_data = [45,30,15,0,-15,-30,-45, -60] #as the azimuth
+    scatter_and_spin(coords_data, views_data)
+    
     
     print("FINISH")
