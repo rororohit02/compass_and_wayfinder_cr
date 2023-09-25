@@ -6,31 +6,6 @@ Function:   Takes any universal point and creates a unit vector with
             for the user's orientation.
 """
 
-#TODO: Implement latitude and longitude coordinates
-#       and translate to Cartesian using ESRI maps and MATLAB.
-#       https://www.mathworks.com/help/matlab/matlab_external/call-matlab-functions-asynchronously-from-python.html
-#       https://www.mathworks.com/help/map/ref/projcrs.html
-#       UTM ESRI Code for North Texas: 103539 (https://epsg.io/?q=kind:PROJCRS&page=67) North Central Texas: 103540 (worth using both) 103539-103543 Texas Range
-
-
-#TODO: Find a way to remove the grid so that only the vector is graphed
-#       without any axis DONE
-
-#TODO: Loop code to run indefinitely
-
-#TODO: Format code better DONE
-
-#TODO: Add support for async data input
-#       https://realpython.com/python-async-features/
-#       https://realpython.com/async-io-python/
-
-#TODO: Use more efficient python math/matrix package eventually
-#       Numpy?
-#       OpenCV?
-
-#TODO: Improve animation method for updating graph
-
-
 
 import math
 import matplotlib.pyplot as plt
@@ -112,10 +87,13 @@ def scatter_and_spin(coordinate_data: list, viewing_data: list):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    #Set limits and views
-    ax.set_xlim([-1,11])
+    #Set limits and views, without limits view space fits the existing data
+    ax.set_xlim([-1,11]) 
     ax.set_ylim([-1,11])
     ax.set_zlim([-1,11])
+
+    plt.axis('off')
+
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
@@ -148,15 +126,34 @@ def scatter_and_spin(coordinate_data: list, viewing_data: list):
         plt.draw() 
         plt.pause(.5)
 
+#Plot a single compass vector 
+def compass_vec(coordinate_data: list, viewing_data: list):
+    assert(len(coordinate_data) == len(viewing_data))
+
+    plt.switch_backend('TkAgg') # Recommended for plotting vectors in a 3d space
+
+    #Setup simple 3-D fig/x
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+
+    pass
+
+
+
 
 #Main Function
 #Should be minimal coding within here
 if __name__ == "__main__":
     print("START")
 
-    coords_data = [(0,0,0), (10,0,0), (10, 10, 0), (0, 10, 0), (0, 10, 10), (0, 0, 10), (10, 0, 10), (10, 10, 10)]
-    views_data = [45,30,15,0,-15,-30,-45, -60] #as the azimuth
-    scatter_and_spin(coords_data, views_data)
+    scatter_data = [(0,0,0), (10,0,0), (10, 10, 0), (0, 10, 0), (0, 10, 10), (0, 0, 10), (10, 0, 10), (10, 10, 10), (0, 0, -10)]
+    views_data = [45,30,15,0,-15,-30,-45, -60, -60] #as the azimuth viewing data
+    scatter_and_spin(scatter_data, views_data)
+
+
+
+
     
     
     print("FINISH")
