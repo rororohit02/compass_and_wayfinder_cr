@@ -7,6 +7,7 @@
 ## Wayfinder.py
 - [ ] Modify code to be a grid that represents 30 degrees horizontal and 30 degrees vertical (Does not utilize AR) and make the universal angles change as the user rotates
 - [ ] Incorporate into glass display
+- [x] Don't touch for now
 
 ## Compass.py
 
@@ -17,7 +18,7 @@
 
 
 - [x] Find a way to remove the grid so that only the vector is graphed without any axis
-- [ ] Loop code to run indefinitely given coordinates
+- [x] Loop code to run indefinitely given coordinates
 - [x] Add queue and basic 'animation'
 - [ ] Improve animation running time/efficiency
 - [ ] Implement more robust calculations with numpy or OpenCV
@@ -25,5 +26,8 @@
     * https://realpython.com/python-async-features/
     * https://realpython.com/async-io-python/
 - [x] Add support for changing view angle
-- [ ] Make function to plot compass arrow (vector)
+- [x] Make function to plot compass arrow (vector)
 - [ ] Possibly make animation take plotting function as parameter?
+- [x] Make slider/input to continously change view angle
+- [ ] Vector Triagulization?
+- [ ] Integrate Matlab processing

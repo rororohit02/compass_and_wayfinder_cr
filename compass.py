@@ -9,8 +9,10 @@ Function:   Takes any universal point and creates a unit vector with
 
 import math
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation
+#from mpl_toolkits.mplot3d import Axes3D
+#from matplotlib.animation import FuncAnimation
+from matplotlib.widgets import Slider
+
 #import numpy as np
 import queue
 #import random #To be used with random coordinates in the future
@@ -92,7 +94,7 @@ def scatter_and_spin(coordinate_data: list, viewing_data: list):
     ax.set_ylim([-1,11])
     ax.set_zlim([-1,11])
 
-    plt.axis('off')
+    #plt.axis('off')
 
     ax.set_xlabel('x')
     ax.set_ylabel('y')
@@ -126,20 +128,41 @@ def scatter_and_spin(coordinate_data: list, viewing_data: list):
         plt.draw() 
         plt.pause(.5)
 
-#Plot a single compass vector 
-def compass_vec(coordinate_data: list, viewing_data: list):
-    assert(len(coordinate_data) == len(viewing_data))
+
+#Draw 3d coordinates given object position, viewing angle, and a graphing function
+def draw_3d_graph(position_data: list, viewing_angle_data: list, graph_function):
+   pass
+
+
+#Display a static 3d vector with a slider for viewing angle
+def mvp_with_slider(endpoint_pos):
 
     plt.switch_backend('TkAgg') # Recommended for plotting vectors in a 3d space
 
     #Setup simple 3-D fig/x
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+    plot_ax = fig.add_axes([0, 0, 1, .8], projection='3d')
+    slider_ax = fig.add_axes([0.1, 0.85, 0.8, 0.1])
+    plot_ax.set_xlim([-1,1]) 
+    plot_ax.set_ylim([-1,1])
+    plot_ax.set_zlim([-1,1])
 
+    #Make unit vector to endpoint_pos
+    #Replace with Matlab calc
+    mag = math.sqrt(endpoint_pos[0]**2 + endpoint_pos[1]**2 + endpoint_pos[2]**2)
+    unit_vec = (endpoint_pos[0]/mag, endpoint_pos[1]/mag, endpoint_pos[2]/mag)
+    origin = (0,0,0)
+    plot_ax.quiver(*origin, *unit_vec)
 
-    pass
+    angle_slide = Slider(ax=slider_ax, label='Azimuth (deg)', valmin=0, valmax=359, valinit=0, valstep=1)
 
+    #Update function for view angle slider
+    def update(val):
+        azimuth = angle_slide.val
+        plot_ax.view_init(30, azimuth)
 
+    angle_slide.on_changed(update)
+    plt.show()
 
 
 #Main Function
@@ -147,10 +170,17 @@ def compass_vec(coordinate_data: list, viewing_data: list):
 if __name__ == "__main__":
     print("START")
 
+    #Animated Vector Graph
+    #origin_pos = (0,0,0)
+
+    #Animated Scatter Graph
+    """
     scatter_data = [(0,0,0), (10,0,0), (10, 10, 0), (0, 10, 0), (0, 10, 10), (0, 0, 10), (10, 0, 10), (10, 10, 10), (0, 0, -10)]
     views_data = [45,30,15,0,-15,-30,-45, -60, -60] #as the azimuth viewing data
     scatter_and_spin(scatter_data, views_data)
-
+    """
+    pos = (10,10,10)
+    mvp(pos)
 
 
 
